@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/siman-man/method_call_tree.svg?branch=master)](https://travis-ci.org/siman-man/method_call_tree)
+
 # MethodCallTree
 
 MethodCallTree is like tree command for method call stack.
