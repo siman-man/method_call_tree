@@ -54,7 +54,7 @@ class MethodCallTree
   end
 
   def walk(parent, tree, space = "")
-    @queue << "#{parent.gsub(/_\d+/, '')}\n"
+    @queue << "#{parent.gsub(/_\d+$/, '')}\n"
 
     while node = tree.shift
       @queue << get_line(end_line: tree.empty?, space: space)

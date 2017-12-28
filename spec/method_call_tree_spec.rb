@@ -53,4 +53,17 @@ TestCase4::hoge
 
     expect(tree.to_s).to eq(expect)
   end
+
+  it 'test case 5' do
+    tree = MethodCallTree.create { TestCase5.new.hoge_1 }
+
+    expect = <<-EXPECT
+TestCase5::hoge_1
+├───── TestCase5::piyo_2
+└───── TestCase5::fuga_3
+        └───── TestCase5::foo_4
+    EXPECT
+
+    expect(tree.to_s).to eq(expect)
+  end
 end

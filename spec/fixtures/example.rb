@@ -55,3 +55,20 @@ class TestCase4
   def foo
   end
 end
+
+class TestCase5
+  def hoge_1
+    piyo_2
+    fuga_3
+  end
+
+  def piyo_2
+  end
+
+  def fuga_3
+    foo_4
+  end
+
+  def foo_4
+  end
+end
