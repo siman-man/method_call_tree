@@ -12,6 +12,7 @@ Gem::Specification.new do |spec|
   spec.description   = %q{method call tree}
   spec.homepage      = "https://github.com/siman-man/method_call_tree"
   spec.license       = "MIT"
+  spec.required_ruby_version = ">= 2.1.0"
 
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
