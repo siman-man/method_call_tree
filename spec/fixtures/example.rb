@@ -37,3 +37,21 @@ class TestCase3
   def foo
   end
 end
+
+class TestCase4
+  def hoge
+    piyo
+    fuga
+    fuga
+  end
+
+  def piyo
+  end
+
+  def fuga
+    foo
+  end
+
+  def foo
+  end
+end
