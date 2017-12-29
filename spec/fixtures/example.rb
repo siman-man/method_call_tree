@@ -72,3 +72,10 @@ class TestCase5
   def foo_4
   end
 end
+
+class TestCase6
+  def dfs(str = 'a')
+    return if str > 'd'
+    dfs(str.next)
+  end
+end

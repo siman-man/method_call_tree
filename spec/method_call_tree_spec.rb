@@ -66,4 +66,18 @@ TestCase5::hoge_1
 
     expect(tree.to_s).to eq(expect)
   end
+
+  it 'test case 6' do
+    tree = MethodCallTree.create(args: true) { TestCase6.new.dfs }
+
+    expect = <<-EXPECT
+TestCase6::dfs(str = "a")
+└───── TestCase6::dfs(str = "b")
+        └───── TestCase6::dfs(str = "c")
+                └───── TestCase6::dfs(str = "d")
+                        └───── TestCase6::dfs(str = "e")
+    EXPECT
+
+    expect(tree.to_s).to eq(expect)
+  end
 end

@@ -1,17 +1,26 @@
 require 'method_call_tree/version'
 
 class MethodCallTree
-  SPACE_SIZE = 8
-  T_LINE = '├─────'
-  I_LINE = '│'
-  L_LINE = '└─────'
+  GET_ARGUMENTS = <<-'TEXT'.freeze
+    method(__method__).parameters.map { |t, v|
+      [v, eval(v.to_s)]
+    }.map { |n, v|
+      "#{n} = #{v.inspect}"
+    }.join(', ')
+  TEXT
 
-  def self.create(&block)
-    new(&block)
+  SPACE_SIZE = 8
+  T_LINE = '├─────'.freeze
+  I_LINE = '│'.freeze
+  L_LINE = '└─────'.freeze
+
+  def self.create(options = {}, &block)
+    new(options, &block)
   end
 
-  def initialize
-    @tree = Hash.new
+  def initialize(options)
+    @args = options[:args]
+    @tree = {}
     @queue = []
 
     tracer.enable { yield }
@@ -34,7 +43,9 @@ class MethodCallTree
     TracePoint.new(:call, :return) do |tp|
       case tp.event
         when :call
-          key = "#{tp.defined_class}::#{tp.method_id}_#{id}"
+          key = "#{tp.defined_class}::#{tp.method_id}"
+          key += "(#{tp.binding.eval(GET_ARGUMENTS)})" if @args
+          key += "_#{id}"
           id += 1
 
           call_stack.inject(@tree, :[])[key] = {}
