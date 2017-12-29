@@ -2,7 +2,7 @@ require 'fixtures/example'
 
 RSpec.describe MethodCallTree do
   it 'test case 1' do
-    tree = MethodCallTree.create { TestCase1.new.hoge }
+    tree = MethodCallTree.create(class: true) { TestCase1.new.hoge }
 
     expect = <<-EXPECT
 TestCase1::hoge
@@ -15,7 +15,7 @@ TestCase1::hoge
   end
 
   it 'test case 2' do
-    tree = MethodCallTree.create { TestCase2.new.hoge }
+    tree = MethodCallTree.create(class: true) { TestCase2.new.hoge }
 
     expect = <<-EXPECT
 TestCase2::hoge
@@ -28,7 +28,7 @@ TestCase2::hoge
   end
 
   it 'test case 3' do
-    tree = MethodCallTree.create { TestCase3.hoge }
+    tree = MethodCallTree.create(class: true) { TestCase3.hoge }
 
     expect = <<-EXPECT
 #<Class:TestCase3>::hoge
@@ -40,7 +40,7 @@ TestCase2::hoge
   end
 
   it 'test case 4' do
-    tree = MethodCallTree.create { TestCase4.new.hoge }
+    tree = MethodCallTree.create(class: true) { TestCase4.new.hoge }
 
     expect = <<-EXPECT
 TestCase4::hoge
@@ -55,7 +55,7 @@ TestCase4::hoge
   end
 
   it 'test case 5' do
-    tree = MethodCallTree.create { TestCase5.new.hoge_1 }
+    tree = MethodCallTree.create(class: true) { TestCase5.new.hoge_1 }
 
     expect = <<-EXPECT
 TestCase5::hoge_1
@@ -68,7 +68,7 @@ TestCase5::hoge_1
   end
 
   it 'test case 6' do
-    tree = MethodCallTree.create(args: true) { TestCase6.new.dfs }
+    tree = MethodCallTree.create(class: true, args: true) { TestCase6.new.dfs }
 
     expect = <<-EXPECT
 TestCase6::dfs(str = "a")

@@ -18,6 +18,7 @@ class MethodCallTree
 
   def initialize(options)
     @args = options[:args]
+    @class = options[:class]
     @tree = {}
     @queue = []
 
@@ -41,7 +42,9 @@ class MethodCallTree
     TracePoint.new(:call, :return) do |tp|
       case tp.event
         when :call
-          key = "#{tp.defined_class}::#{tp.method_id}"
+          key = ''
+          key += "#{tp.defined_class}::" if @class
+          key += "#{tp.method_id}"
           key += "(#{tp.binding.eval(GET_ARGUMENTS)})" if @args
           key += "_#{id}"
           id += 1
