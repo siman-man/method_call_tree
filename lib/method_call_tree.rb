@@ -2,10 +2,8 @@ require 'method_call_tree/version'
 
 class MethodCallTree
   GET_ARGUMENTS = <<-'TEXT'.freeze
-    method(__method__).parameters.map { |t, v|
-      [v, eval(v.to_s)]
-    }.map { |n, v|
-      "#{n} = #{v.inspect}"
+    method(__method__).parameters.map { |_t, v|
+      "#{v} = #{eval(v.to_s).inspect}"
     }.join(', ')
   TEXT
 
