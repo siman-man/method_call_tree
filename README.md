@@ -42,16 +42,36 @@ puts tree
 result
 
 ```
+foo
+├───── bar
+└───── baz
+        └───── hoge
+```
+
+`class` option
+
+```ruby
+tree = MethodCallTree.create(class: true) do
+  Foo.new.foo
+end
+```
+
+result
+
+```
 Foo::foo
 ├───── Foo::bar
 └───── Foo::baz
         └───── Foo::hoge
 ```
 
+---
+
 `args` options enable
 
 ```ruby
 require 'method_call_tree'
+
 def fibonacci(a = 1, b = 0)
   return if a > 10
   fibonacci(a + b, a)
@@ -67,13 +87,13 @@ puts tree
 result
 
 ```
-Object::fibonacci(a = 1, b = 0)
-└───── Object::fibonacci(a = 1, b = 1)
-        └───── Object::fibonacci(a = 2, b = 1)
-                └───── Object::fibonacci(a = 3, b = 2)
-                        └───── Object::fibonacci(a = 5, b = 3)
-                                └───── Object::fibonacci(a = 8, b = 5)
-                                        └───── Object::fibonacci(a = 13, b = 8)
+fibonacci(a = 1, b = 0)
+└───── fibonacci(a = 1, b = 1)
+        └───── fibonacci(a = 2, b = 1)
+                └───── fibonacci(a = 3, b = 2)
+                        └───── fibonacci(a = 5, b = 3)
+                                └───── fibonacci(a = 8, b = 5)
+                                        └───── fibonacci(a = 13, b = 8)
 ```
 
 ## License
