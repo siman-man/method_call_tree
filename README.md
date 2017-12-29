@@ -48,6 +48,34 @@ Foo::foo
         └───── Foo::hoge
 ```
 
+`args` options enable
+
+```ruby
+require 'method_call_tree'
+def fibonacci(a = 1, b = 0)
+  return if a > 10
+  fibonacci(a + b, a)
+end
+
+tree = MethodCallTree.create(args: true) do
+  fibonacci
+end
+
+puts tree
+```
+
+result
+
+```
+Object::fibonacci(a = 1, b = 0)
+└───── Object::fibonacci(a = 1, b = 1)
+        └───── Object::fibonacci(a = 2, b = 1)
+                └───── Object::fibonacci(a = 3, b = 2)
+                        └───── Object::fibonacci(a = 5, b = 3)
+                                └───── Object::fibonacci(a = 8, b = 5)
+                                        └───── Object::fibonacci(a = 13, b = 8)
+```
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
