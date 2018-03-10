@@ -49,7 +49,11 @@ class MethodCallTree
           key += "_#{id}"
           id += 1
 
-          call_stack.inject(@tree, :[])[key] = {}
+          if call_stack.empty?
+            @tree[key] = {}
+          else
+            @tree.dig(*call_stack)[key] = {}
+          end
           call_stack.push(key)
         when :return
           call_stack.pop
