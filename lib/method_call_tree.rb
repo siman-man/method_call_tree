@@ -1,12 +1,6 @@
 require 'method_call_tree/version'
 
 class MethodCallTree
-  GET_ARGUMENTS = <<-'TEXT'.freeze
-    method(__method__).parameters.map { |_t, v|
-      "#{v} = #{eval(v.to_s).inspect}"
-    }.join(', ')
-  TEXT
-
   SPACE_SIZE = 8
   T_LINE = '├─────'.freeze
   I_LINE = '│'.freeze
@@ -45,7 +39,7 @@ class MethodCallTree
           key = ''
           key += "#{tp.defined_class}::" if @class
           key += "#{tp.method_id}"
-          key += "(#{tp.binding.eval(GET_ARGUMENTS)})" if @args
+          key += "(#{tp.self.method(tp.method_id).parameters.map { |_t, v| "#{v} = #{tp.binding.local_variable_get(v).inspect}" }.join(', ')})" if @args
           key += "_#{id}"
           id += 1
 
